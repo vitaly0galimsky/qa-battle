@@ -1,0 +1,32 @@
+# Main
+*.iml
+.idea/
+build/
+.gradle/
+
+# Test
+tests/**/*.properties
+
+#CI
+CI/video/
+CI/logs/
+
+# Other
+dist/
+target/
+logs/
+temp/
+log
+bin/
+out
+**/classes
+**/.settings/
+**/.settings
+.classpath
+.project
+**/.classpath
+**/.project
+.settings/
+**/gradlew*
+**/MANIFEST.MF
+*.log

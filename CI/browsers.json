@@ -1,0 +1,12 @@
+{
+  "chrome": {
+    "default": "78.0",
+    "versions": {
+      "78.0": {
+        "image": "selenoid/chrome:78.0",
+        "port": "4444",
+        "path": "/wd/hub"
+      }
+    }
+  }
+}
