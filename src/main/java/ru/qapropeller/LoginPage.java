@@ -1,10 +1,13 @@
 package ru.qapropeller;
 
+import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.support.FindBy;
 
-public class LoginPage {
+public class LoginPage implements Page {
+    private static final String CONFIRM_TEXT = "Are you sure you want to login?";
+    private static final String AGAIN_CONFIRM_TEXT = "Really sure?";
 
     @FindBy(id = "loginInput")
     private SelenideElement userField;
@@ -18,15 +21,20 @@ public class LoginPage {
     @FindBy(css = ".card-footer img")
     private SelenideElement submitButton;
 
+    @FindBy(id = "loader")
+    private SelenideElement loaderImage;
+
     public static LoginPage open() {
         return Selenide.open("/", LoginPage.class);
     }
 
-    public void login() {
-        login("test", "test");
+    public void login(String user, String password) {
+        enterCredentialsAndConfirm(user, password);
+        confirmLogin(true);
+        confirmSecondModal(true);
     }
 
-    public void login(String user, String password) {
+    public void enterCredentialsAndConfirm(String user, String password) {
         userField.parent().hover().click();
         userField.setValue(user);
 
@@ -36,8 +44,27 @@ public class LoginPage {
         submitWaitButton.hover();
 
         submitButton.click();
+    }
 
-        Selenide.confirm("Are you sure you want to login?");
-        Selenide.confirm("Really sure?");
+    public void confirmLogin(boolean confirm) {
+        if (confirm) {
+            Selenide.confirm(CONFIRM_TEXT);
+        } else {
+            Selenide.dismiss(CONFIRM_TEXT);
+        }
+    }
+
+    public void confirmSecondModal(boolean confirm) {
+        loaderImage.shouldBe(Condition.visible);
+        if (confirm) {
+            Selenide.confirm(AGAIN_CONFIRM_TEXT);
+        } else {
+            Selenide.dismiss(AGAIN_CONFIRM_TEXT);
+        }
+    }
+
+    @Override
+    public void checkIsOpen() {
+        userField.shouldBe(Condition.visible);
     }
 }
