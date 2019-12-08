@@ -20,6 +20,8 @@ task cucumber(type: JavaExec, dependsOn: testClasses) {
     main = "io.cucumber.core.cli.Main"
     classpath += files(configurations.testRuntime.files, sourceSets.test.output.getFiles(), sourceSets.main.output.getFiles())
     args += ['--tags', 'not @ignore',
+             '--plugin', 'html:cucumber/html-report',
+             '--plugin', 'junit:cucumber/junit-report.xml',
              '--plugin', 'json:cucumber/cucumber-report.json',
              '--plugin', 'pretty',
              '--monochrome',
