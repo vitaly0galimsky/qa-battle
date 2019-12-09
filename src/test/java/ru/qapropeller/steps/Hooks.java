@@ -31,6 +31,7 @@ public class Hooks {
     @Before(order = 10)
     public static void setUpSelenide() {
         Configuration.browser = "chrome";
+//        Configuration.remote = "http://172.29.16.170:4444/wd/hub";
         Configuration.baseUrl = "http://172.29.16.170:8080";
         Configuration.browserSize = "1920x1080";
         // Много где специально стоят большие ожидания. Проще один раз задать

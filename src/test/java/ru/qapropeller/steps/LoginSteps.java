@@ -1,16 +1,14 @@
 package ru.qapropeller.steps;
 
 import com.codeborne.selenide.Selenide;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ru.qapropeller.LoginPage;
 import ru.qapropeller.MainPage;
 import ru.qapropeller.TestContext;
 
 public class LoginSteps {
-    private static final Logger LOG = LoggerFactory.getLogger(LoginSteps.class);
     private static final String USER = "test";
     private static final String PASS = "test";
 
@@ -21,11 +19,16 @@ public class LoginSteps {
         this.context = context;
     }
 
-    @When("^пользователь авторизируется в системе$")
+    @Given("^пользователь авторизируется в системе$")
     public void login() {
+        tryLogin();
+        checkLogin();
+    }
+
+    @When("^пользователь пытается авторизоваться в системе$")
+    public void tryLogin() {
         page = LoginPage.open();
         page.login(USER, PASS);
-        Selenide.page(MainPage.class).checkIsOpen();
     }
 
     @When("^пользователь пытается авторизоваться в системе с некорректными (логином|паролем)$")
